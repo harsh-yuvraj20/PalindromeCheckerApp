@@ -1,11 +1,17 @@
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        String appName = "Palindrome Checker App";
-        String appVersion = "v1.0.0";
-        System.out.println("================================");
-        System.out.println("Welcome to " + appName);
-        System.out.println("Version: " + appVersion);
-        System.out.println("================================");
-        System.out.println("Ready to process data...");
+        String original = "madam";
+        String reverse = "";
+        int length = original.length();
+
+        for(int i = length - 1; i >= 0; --i) {
+            reverse = reverse + original.charAt(i);
+        }
+
+        if (original.equalsIgnoreCase(reverse)) {
+            System.out.println("The string '" + original + "' is a palindrome.");
+        } else {
+            System.out.println("The string '" + original + "' is NOT a palindrome.");
+        }
     }
 }
