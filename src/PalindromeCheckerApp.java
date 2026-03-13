@@ -2,34 +2,61 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+public class PalindromeCheckerApp import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
+
 public class PalindromeCheckerApp {
+
+    // Stack-based
+    public static boolean stackPalindrome(String input) {
+        String str = input.toLowerCase();
+        Stack<Character> stack = new Stack<>();
+        for (char ch : str.toCharArray()) stack.push(ch);
+        for (int i = 0; i < str.length(); i++)
+            if (str.charAt(i) != stack.pop()) return false;
+        return true;
+    }
+
+    // Deque-based
+    public static boolean dequePalindrome(String input) {
+        String str = input.toLowerCase();
+        Deque<Character> deque = new ArrayDeque<>();
+        for (char ch : str.toCharArray()) deque.addLast(ch);
+        while (deque.size() > 1)
+            if (!deque.removeFirst().equals(deque.removeLast())) return false;
+        return true;
+    }
+
+    // Recursive
+    public static boolean recursivePalindrome(String str, int start, int end) {
+        if (start >= end) return true;
+        if (str.charAt(start) != str.charAt(end)) return false;
+        return recursivePalindrome(str, start + 1, end - 1);
+    }
 
     public static void main(String[] args) {
 
-        String inputUC6 = "Radar";
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stackUC6 = new Stack<>();
+        String testString = "AmanaplanacanalPanama".toLowerCase();
 
-        for (int i = 0; i < inputUC6.length(); i++) {
-            char ch = Character.toLowerCase(inputUC6.charAt(i));
-            queue.add(ch);
-            stackUC6.push(ch);
-        }
+        long start, end;
 
-        boolean isPalindromeUC6 = true;
+        // Stack
+        start = System.nanoTime();
+        boolean stackResult = stackPalindrome(testString);
+        end = System.nanoTime();
+        System.out.println("Stack: " + stackResult + ", Time: " + (end - start) + " ns");
 
-        while (!queue.isEmpty() && !stackUC6.isEmpty()) {
-            if (!queue.remove().equals(stackUC6.pop())) {
-                isPalindromeUC6 = false;
-                break;
-            }
-        }
+        // Deque
+        start = System.nanoTime();
+        boolean dequeResult = dequePalindrome(testString);
+        end = System.nanoTime();
+        System.out.println("Deque: " + dequeResult + ", Time: " + (end - start) + " ns");
 
-        if (isPalindromeUC6) {
-            System.out.println("The string '" + inputUC6 + "' is a palindrome.");
-        } else {
-            System.out.println("The string '" + inputUC6 + "' is NOT a palindrome.");
-        }
-
+        // Recursive
+        start = System.nanoTime();
+        boolean recResult = recursivePalindrome(testString, 0, testString.length() - 1);
+        end = System.nanoTime();
+        System.out.println("Recursive: " + recResult + ", Time: " + (end - start) + " ns");
     }
 }
