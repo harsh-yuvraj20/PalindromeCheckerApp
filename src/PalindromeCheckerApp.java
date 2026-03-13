@@ -1,30 +1,41 @@
 import java.util.Scanner;
+import java.util.Stack;
+
+class PalindromeChecker {
+
+    public boolean checkPalindrome(String input) {
+        String normalized = input.toLowerCase();
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : normalized.toCharArray()) {
+            stack.push(ch);
+        }
+
+        for (int i = 0; i < normalized.length(); i++) {
+            if (normalized.charAt(i) != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a string for UC10: ");
-        String inputUC10 = scanner.nextLine();
+        System.out.print("Enter a string for UC11: ");
+        String inputUC11 = scanner.nextLine();
 
-        // Normalize: remove spaces and convert to lowercase
-        String normalized = inputUC10.replaceAll("\\s+", "").toLowerCase();
+        PalindromeChecker checker = new PalindromeChecker();
+        boolean result = checker.checkPalindrome(inputUC11);
 
-        boolean isPalindromeUC10 = true;
-        int n = normalized.length();
-
-        for (int i = 0; i < n / 2; i++) {
-            if (normalized.charAt(i) != normalized.charAt(n - 1 - i)) {
-                isPalindromeUC10 = false;
-                break;
-            }
-        }
-
-        if (isPalindromeUC10) {
-            System.out.println("The string '" + inputUC10 + "' is a palindrome (case-insensitive, spaces ignored).");
+        if (result) {
+            System.out.println("The string '" + inputUC11 + "' is a palindrome.");
         } else {
-            System.out.println("The string '" + inputUC10 + "' is NOT a palindrome (case-insensitive, spaces ignored).");
+            System.out.println("The string '" + inputUC11 + "' is NOT a palindrome.");
         }
 
         scanner.close();
