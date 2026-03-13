@@ -1,35 +1,31 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
+    public static boolean isPalindrome(String str, int start, int end) {
+        if (start >= end) {
+            return true;
+        }
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+        return isPalindrome(str, start + 1, end - 1);
+    }
+
     public static void main(String[] args) {
 
-        String inputUC6 = "Radar";
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stackUC6 = new Stack<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a string for UC9: ");
+        String inputUC9 = scanner.nextLine().toLowerCase();
 
-        for (int i = 0; i < inputUC6.length(); i++) {
-            char ch = Character.toLowerCase(inputUC6.charAt(i));
-            queue.add(ch);
-            stackUC6.push(ch);
-        }
+        boolean result = isPalindrome(inputUC9, 0, inputUC9.length() - 1);
 
-        boolean isPalindromeUC6 = true;
-
-        while (!queue.isEmpty() && !stackUC6.isEmpty()) {
-            if (!queue.remove().equals(stackUC6.pop())) {
-                isPalindromeUC6 = false;
-                break;
-            }
-        }
-
-        if (isPalindromeUC6) {
-            System.out.println("The string '" + inputUC6 + "' is a palindrome.");
+        if (result) {
+            System.out.println("The string '" + inputUC9 + "' is a palindrome.");
         } else {
-            System.out.println("The string '" + inputUC6 + "' is NOT a palindrome.");
+            System.out.println("The string '" + inputUC9 + "' is NOT a palindrome.");
         }
 
+        scanner.close();
     }
 }
